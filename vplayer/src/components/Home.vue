@@ -16,13 +16,24 @@
     <!-- 首页内容 -->
     <div class="main">
       <div class="tab">
-        <div class="tab-item" :class="{select:tabShow==1}">
+        <div class="tab-item" :class="{select:tabShow==1}" @click="isHit()">
           <div class="tab-item-title">正在热映</div>
         </div>
-        <div class="tab-item" :class="{select:tabShow==2}">
+        <div class="tab-item" :class="{select:tabShow==2}" @click="upComing()">
           <div class="tab-item-title">即将上映</div>
         </div>
       </div>
+      <!-- 轮播 -->
+      <div class="banner-box">
+        <swiper :list="bannerList" v-model="bannerIndex" @on-index-change="bannerIndexChange"
+          auto
+          height="110px"
+          dots-position="center"
+        ></swiper>
+        <!-- <x-button @click.native="bannerIndex = 0">go to 0</x-button>
+        <x-button @click.native="bannerIndex = 1">go to 1</x-button> -->
+      </div>
+
     </div>
     <!-- 底部菜单组件 -->
     <Menu></Menu>
@@ -30,16 +41,29 @@
 </template>
 
 <script>
-import { Tab, TabItem } from "vux";
+import { Tab, TabItem, Swiper } from "vux";
 import Header from "@/components/Header";
 import Menu from "@/components/Menu";
-import func from "./vue-temp/vue-editor-bridge";
 
 export default {
   name: "Home",
   data() {
     return {
-      tabShow: 1
+      tabShow: 1,
+      // 轮播数据
+      bannerIndex: 0,
+      bannerList: [
+        {
+          url: "javascript:;",
+          img: "./static/images/swiper/banner1.png",
+          title: "ceshi1"
+        },
+        {
+          url: "javascript:;",
+          img: "./static/images/swiper/banner2.png",
+          title: "ceshi2"
+        }
+      ]
     };
   },
   methods: {
@@ -48,11 +72,16 @@ export default {
     },
     upComing: function() {
       this.tabShow = 2;
+    },
+    // 轮播方法
+    bannerIndexChange(index) {
+      this.bannerIndex = index;
     }
   },
   components: {
     Tab,
     TabItem,
+    Swiper,
     Menu
   }
 };
@@ -139,8 +168,8 @@ input::-moz-placeholder {
   float: left;
   width: 50%;
   height: 100%;
-  line-height: 32px;
-  padding: 4px;
+  line-height: 36px;
+  padding: 2px;
   box-sizing: border-box;
 }
 .tab-item-title {
@@ -154,4 +183,5 @@ input::-moz-placeholder {
   color: #fff;
   background-color: #81bbce;
 }
+
 </style>
