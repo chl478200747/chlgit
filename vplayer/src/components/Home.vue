@@ -14,7 +14,7 @@
       </div>
     </div>
     <!-- 首页内容 -->
-    <div class="main">
+    <div class="main"  ref="viewBox">
       <div class="tab">
         <div class="tab-item" :class="{select:tabShow==1}" @click="isHit()">
           <div class="tab-item-title">正在热映</div>
@@ -36,49 +36,52 @@
         <!-- <x-button @click.native="bannerIndex = 0">go to 0</x-button>
         <x-button @click.native="bannerIndex = 1">go to 1</x-button>-->
       </div>
-      <!-- 最新电影 -->
-      <div class="partition-header">
-        <h4>最新</h4>
-        <a href="javascript:;" class="icon-more"></a>
-      </div>
-      <div class="partition">
-        <div class="movie-card">
-          <div class="card-content clearfix">
-            <div class="movie-img"></div>
-            <div class="movie-info">
-              <h5 class="movie-title">决战食神</h5>
-              <div class="movie-grade">
-                <rater font-size="10" v-model="tmpRater"></rater>
-                <span class="movie-score">8.1</span>
+      <!-- 滚动盒子 -->
+      <view-box>
+        <!-- 最新电影 -->
+        <div class="partition-header">
+          <h4>最新</h4>
+          <a href="javascript:;" class="icon-more"></a>
+        </div>
+        <div class="partition">
+          <div class="movie-card" v-for="item in theMovieList1" :key="item.id">
+            <div class="card-content clearfix">
+              <div class="movie-img"></div>
+              <div class="movie-info">
+                <h5 class="movie-title">{{item.name}}</h5>
+                <div class="movie-grade">
+                  <rater font-size="4" v-model="tmpRater"></rater>
+                  <span class="movie-score">{{item.scoreStar}}</span>
+                </div>
+                <div class="movie-info-text movie-notice">{{item.notice}}</div>
+                <div class="movie-info-text movie-introduce">{{item.comment2}}</div>
+                <div class="movie-info-text movie-remarks">{{item.comment3}}</div>
               </div>
-              <div class="movie-info-text movie-notice">今天122家影院放映</div>
-              <div class="movie-info-text movie-introduce">厨神争头筹，爱情遇阴谋</div>
-              <div class="movie-info-text movie-remarks">新春影片中的黑马</div>
-            </div>
-            <div class="movie-other">
-              <div class="clearfix">
-                <div class="watch-num">300</div>
-                <div class="icon-watch"></div>
+              <div class="movie-other">
+                <div class="clearfix">
+                  <div class="watch-num">{{item.watch}}</div>
+                  <div class="icon-watch"></div>
+                </div>
+                <a href="javascript:;" class="buy-ticket">购票</a>
               </div>
-              <a href="javascript:;" class="buy-ticket">购票</a>
             </div>
-          </div>
-          <div class="tool-btns clearfix">
-            <div class="tool-btn wish-combo">
-              <div class="icon-wish"></div>
-              <div class="btn-text">想看</div>
-            </div>
-            <div class="tool-btn collection-combo">
-              <div class="icon-collection"></div>
-              <div class="btn-text">收藏</div>
-            </div>
-            <div class="tool-btn comment-combo">
-              <div class="icon-comment"></div>
-              <div class="btn-text">30</div>
+            <div class="tool-btns clearfix">
+              <div class="tool-btn wish-combo">
+                <div class="icon-wish"></div>
+                <div class="btn-text">想看</div>
+              </div>
+              <div class="tool-btn collection-combo">
+                <div class="icon-collection"></div>
+                <div class="btn-text">收藏</div>
+              </div>
+              <div class="tool-btn comment-combo">
+                <div class="icon-comment"></div>
+                <div class="btn-text">30</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </view-box>
     </div>
     <!-- 底部菜单组件 -->
     <Menu></Menu>
@@ -87,6 +90,7 @@
 
 <script>
 import { Tab, TabItem, Swiper, Rater } from "vux";
+import BScroll from 'better-scroll';
 import Header from "@/components/Header";
 import Menu from "@/components/Menu";
 
@@ -109,10 +113,47 @@ export default {
           // title: "ceshi2"
         }
       ],
-      tmpRater: 5
+      tmpRater: 5,
+      // 电影CARD数据
+      theMovieList1: [
+        {
+          id: 1,
+          name: "决战食神",
+          score: 8.1,
+          scoreStar: parseInt((8.1 / 10) * 5),
+          notice: "今天122家影院放映",
+          comment2: "厨神争头筹，爱情遇阴谋",
+          comment3: "新春影片中的黑马",
+          watch: 300
+        },
+        {
+          id: 2,
+          name: "极限特工：终极回归",
+          score: 7.6,
+          scoreStar: parseInt((8.1 / 10) * 5),
+          notice: "今天68家影院放映",
+          comment2: "特工再回归，英雄组团来",
+          comment3: "范迪塞尔练手甄子丹挑战极限动作",
+          watch: 243
+        },
+        {
+          id: 3,
+          name: "决战食神",
+          score: 8.1,
+          scoreStar: parseInt((8.1 / 10) * 5),
+          notice: "今天122家影院放映",
+          comment2: "厨神争头筹，爱情遇阴谋",
+          comment3: "新春影片中的黑马",
+          watch: 300
+        },
+      ]
     };
   },
   methods: {
+    // 滚动初始化
+    initScroll() {
+      this.viewBox = new BScroll(this.$refs.viewBox, {});
+    },
     isHit: function() {
       this.tabShow = 1;
     },
@@ -123,6 +164,9 @@ export default {
     bannerIndexChange(index) {
       this.bannerIndex = index;
     }
+  },
+  created () {
+    this.initScroll();
   },
   components: {
     Tab,
@@ -140,6 +184,9 @@ export default {
   width: 100%;
   height: 65px;
   background-color: #8cc5d8;
+}
+.main {
+  height: 60%;
 }
 .aside-item {
   position: absolute;
@@ -230,6 +277,7 @@ input::-moz-placeholder {
   color: #fff;
   background-color: #81bbce;
 }
+
 .partition-header {
   width: 100%;
   height: 40px;
@@ -261,7 +309,9 @@ input::-moz-placeholder {
   width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   padding: 15px;
+  border-radius: 4px;
   box-sizing: border-box;
+  margin-bottom: 10px;
 }
 .card-content {
   width: 100%;
@@ -354,5 +404,8 @@ input::-moz-placeholder {
   font-size: 12px;
   color: #c9c9c9;
   vertical-align: middle;
+}
+.home .weui-tabbar {
+  position: fixed;
 }
 </style>
