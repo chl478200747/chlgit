@@ -14,7 +14,7 @@
       </div>
     </div>
     <!-- 首页内容 -->
-    <div class="main"  ref="viewBox">
+    <div class="main" ref="viewBox">
       <div class="tab">
         <div class="tab-item" :class="{select:tabShow==1}" @click="isHit()">
           <div class="tab-item-title">正在热映</div>
@@ -23,6 +23,7 @@
           <div class="tab-item-title">即将上映</div>
         </div>
       </div>
+
       <!-- 轮播 -->
       <div class="banner-box">
         <swiper
@@ -36,52 +37,49 @@
         <!-- <x-button @click.native="bannerIndex = 0">go to 0</x-button>
         <x-button @click.native="bannerIndex = 1">go to 1</x-button>-->
       </div>
-      <!-- 滚动盒子 -->
-      <view-box>
-        <!-- 最新电影 -->
-        <div class="partition-header">
-          <h4>最新</h4>
-          <a href="javascript:;" class="icon-more"></a>
-        </div>
-        <div class="partition">
-          <div class="movie-card" v-for="item in theMovieList1" :key="item.id">
-            <div class="card-content clearfix">
-              <div class="movie-img"></div>
-              <div class="movie-info">
-                <h5 class="movie-title">{{item.name}}</h5>
-                <div class="movie-grade">
-                  <rater font-size="4" v-model="tmpRater"></rater>
-                  <span class="movie-score">{{item.scoreStar}}</span>
-                </div>
-                <div class="movie-info-text movie-notice">{{item.notice}}</div>
-                <div class="movie-info-text movie-introduce">{{item.comment2}}</div>
-                <div class="movie-info-text movie-remarks">{{item.comment3}}</div>
+      <!-- 最新电影 -->
+      <div class="partition-header">
+        <h4>最新</h4>
+        <a href="javascript:;" class="icon-more"></a>
+      </div>
+      <div class="partition">
+        <div class="movie-card" v-for="item in theMovieList1" :key="item.id">
+          <div class="card-content clearfix">
+            <div class="movie-img"></div>
+            <div class="movie-info">
+              <h5 class="movie-title">{{item.name}}</h5>
+              <div class="movie-grade">
+                <rater font-size="4" v-model="tmpRater"></rater>
+                <span class="movie-score">{{item.scoreStar}}</span>
               </div>
-              <div class="movie-other">
-                <div class="clearfix">
-                  <div class="watch-num">{{item.watch}}</div>
-                  <div class="icon-watch"></div>
-                </div>
-                <a href="javascript:;" class="buy-ticket">购票</a>
-              </div>
+              <div class="movie-info-text movie-notice">{{item.notice}}</div>
+              <div class="movie-info-text movie-introduce">{{item.comment2}}</div>
+              <div class="movie-info-text movie-remarks">{{item.comment3}}</div>
             </div>
-            <div class="tool-btns clearfix">
-              <div class="tool-btn wish-combo">
-                <div class="icon-wish"></div>
-                <div class="btn-text">想看</div>
+            <div class="movie-other">
+              <div class="clearfix">
+                <div class="watch-num">{{item.watch}}</div>
+                <div class="icon-watch"></div>
               </div>
-              <div class="tool-btn collection-combo">
-                <div class="icon-collection"></div>
-                <div class="btn-text">收藏</div>
-              </div>
-              <div class="tool-btn comment-combo">
-                <div class="icon-comment"></div>
-                <div class="btn-text">30</div>
-              </div>
+              <a href="javascript:;" class="buy-ticket">购票</a>
+            </div>
+          </div>
+          <div class="tool-btns clearfix">
+            <div class="tool-btn wish-combo">
+              <div class="icon-wish"></div>
+              <div class="btn-text">想看</div>
+            </div>
+            <div class="tool-btn collection-combo">
+              <div class="icon-collection"></div>
+              <div class="btn-text">收藏</div>
+            </div>
+            <div class="tool-btn comment-combo">
+              <div class="icon-comment"></div>
+              <div class="btn-text">30</div>
             </div>
           </div>
         </div>
-      </view-box>
+      </div>
     </div>
     <!-- 底部菜单组件 -->
     <Menu></Menu>
@@ -90,7 +88,7 @@
 
 <script>
 import { Tab, TabItem, Swiper, Rater } from "vux";
-import BScroll from 'better-scroll';
+import BScroll from "better-scroll";
 import Header from "@/components/Header";
 import Menu from "@/components/Menu";
 
@@ -145,15 +143,15 @@ export default {
           comment2: "厨神争头筹，爱情遇阴谋",
           comment3: "新春影片中的黑马",
           watch: 300
-        },
+        }
       ]
     };
   },
   methods: {
     // 滚动初始化
-    initScroll() {
-      this.viewBox = new BScroll(this.$refs.viewBox, {});
-    },
+    // initScroll() {
+    //   this.viewBox = new BScroll(this.$refs.viewBox, {});
+    // },
     isHit: function() {
       this.tabShow = 1;
     },
@@ -165,8 +163,8 @@ export default {
       this.bannerIndex = index;
     }
   },
-  created () {
-    this.initScroll();
+  created() {
+    // this.initScroll();
   },
   components: {
     Tab,
